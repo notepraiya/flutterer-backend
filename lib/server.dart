@@ -6,8 +6,11 @@ import 'package:shelf_static/shelf_static.dart';
 
 void main() {
   // Assumes the server lives in bin/ and that `pub build` ran
+  // var pathToBuild = join(dirname(Platform.script.toFilePath()),
+  //     '..', 'build/web');
+
   var pathToBuild = join(dirname(Platform.script.toFilePath()),
-      '..', 'build/web');
+      '.', '/');
 
   var handler = createStaticHandler(pathToBuild,
       defaultDocument: 'index.html');

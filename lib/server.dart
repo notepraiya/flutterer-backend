@@ -13,7 +13,7 @@ void main() {
       '.', '/');
 
   var handler = createStaticHandler(pathToBuild,
-      defaultDocument: 'index.html');
+      defaultDocument: 'app.html');
 
   var portEnv = Platform.environment['PORT'];
   var port = portEnv == null ? 8080 : int.parse(portEnv);

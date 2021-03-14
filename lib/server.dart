@@ -9,8 +9,7 @@ void main() {
   // var pathToBuild = join(dirname(Platform.script.toFilePath()),
   //     '..', 'build/web');
 
-  var pathToBuild = join(dirname(Platform.script.toFilePath()),
-      '.', '/');
+  var pathToBuild = join(dirname(Platform.script.toFilePath()),'/');
 
   var handler = createStaticHandler(pathToBuild,
       defaultDocument: 'app.html');

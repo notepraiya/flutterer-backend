@@ -1,5 +1,5 @@
 import 'dart:io' show Platform;
-import 'dart:async' show runZoned;
+import 'dart:async' show runZonedGuarded;
 import 'package:path/path.dart' show join, dirname;
 import 'package:shelf/shelf_io.dart' as io;
 import 'package:shelf_static/shelf_static.dart';
@@ -17,9 +17,11 @@ void main() {
   var portEnv = Platform.environment['PORT'];
   var port = portEnv == null ? 80 : int.parse(portEnv);
 
-  runZoned(() {
+  runZonedGuarded(() {
     io.serve(handler, '0.0.0.0', port);
     print("Serving $pathToBuild on port $port");
   },
-  onError: (e, stackTrace) => print('Oh noes! $e $stackTrace'));
+  (e, stackTrace) {
+    print('Error => $e $stackTrace');
+  });
 }

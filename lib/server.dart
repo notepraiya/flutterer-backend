@@ -9,13 +9,13 @@ void main() {
   // var pathToBuild = join(dirname(Platform.script.toFilePath()),
   //     '..', 'build/web');
 
-  var pathToBuild = join(dirname(Platform.script.toFilePath()),'/');
+  var pathToBuild = join(dirname(Platform.script.toFilePath()), 'www');
 
   var handler = createStaticHandler(pathToBuild,
       defaultDocument: 'app.html');
 
   var portEnv = Platform.environment['PORT'];
-  var port = portEnv == null ? 80 : int.parse(portEnv);
+  var port = portEnv == null ? 8080 : int.parse(portEnv);
 
   runZonedGuarded(() {
     io.serve(handler, '0.0.0.0', port);

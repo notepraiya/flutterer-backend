@@ -1,6 +1,7 @@
 import 'dart:io' show Platform;
 import 'dart:async' show runZonedGuarded;
 import 'package:path/path.dart' show join, dirname;
+import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as io;
 import 'package:shelf_static/shelf_static.dart';
 
@@ -11,8 +12,11 @@ void main() {
 
   var pathToBuild = join(dirname(Platform.script.toFilePath()), 'www');
 
-  var handler = createStaticHandler(pathToBuild,
+  var staticFileHandler = createStaticHandler(pathToBuild,
       defaultDocument: 'app.html');
+  var handler =
+      const Pipeline().addMiddleware(logRequests()).addHandler(staticFileHandler);
+
 
   var portEnv = Platform.environment['PORT'];
   var port = portEnv == null ? 8080 : int.parse(portEnv);

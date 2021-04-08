@@ -1,9 +1,12 @@
 import 'dart:io' show Platform;
 import 'dart:async' show runZonedGuarded;
+import 'dart:convert';
+
 import 'package:path/path.dart' show join, dirname;
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as io;
 import 'package:shelf_static/shelf_static.dart';
+import 'package:shelf_router/shelf_router.dart';
 
 void main() {
   // Assumes the server lives in bin/ and that `pub build` ran
@@ -17,6 +20,9 @@ void main() {
   var handler =
       const Pipeline().addMiddleware(logRequests()).addHandler(staticFileHandler);
 
+  var router = Router();
+  router.get('/user/<user>', _user);
+
 
   var portEnv = Platform.environment['PORT'];
   var port = portEnv == null ? 8080 : int.parse(portEnv);
@@ -28,4 +34,12 @@ void main() {
   (e, stackTrace) {
     print('Error => $e $stackTrace');
   });
+}
+
+Response _user(Request request, String user) {
+  var data = <String, dynamic>{'name': 'yao', 'group': 'ZII'};
+  return Response.ok(
+    json.encode(data),
+    headers: {'Content-Type': 'application/json'},
+  );
 }
